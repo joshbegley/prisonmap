@@ -1,0 +1,22 @@
+String[] prisons;
+
+void setup() {
+}
+
+void draw() {
+  prisons = loadStrings("prisons-latlon.csv");
+  for(int i = 0; i < prisons.length; i++) {
+    String[] values = split(prisons[i], ",");
+    String lat = values[0];
+    String lon = values[1];
+    String id = values[2];
+    PImage test = getSatImage(lat,lon);
+    test.save("facility" + id + ".jpg");
+  }
+  
+}
+
+PImage getSatImage(String lat, String lon) {
+    String url = "http://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lon + "&zoom=16&scale=1&size=640x640&maptype=satellite&sensor=false&junk=.jpg";
+    return(loadImage(url));
+}
